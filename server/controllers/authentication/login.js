@@ -20,6 +20,10 @@ module.exports = (req, res) => {
   }
 
   return passport.authenticate('local', { session: false }, (err, passportUser, info) => {
+    if(info && info.message) {
+      return res.status(400).json(info);
+    }
+
     if(err) {
       return res.status(400).json(err);
     }

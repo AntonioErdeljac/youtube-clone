@@ -8,21 +8,17 @@ passport.use(new LocalStrategy({
   usernameField: 'email',
   passwordField: 'password',
 }, (email, password, done) => {
-  db.Users.getByEmail(email)
+  return db.Users.getByEmail(email)
     .then((user) => {
       if(!user) {
         return done(null, false, {
-          errors: {
-            email: 'is invalid',
-          },
+          message: 'email is invalid',
         });
       }
 
       if(!db.Users.validatePassword(password, user)) {
         return done(null, false, {
-          errors: {
-            password: 'is invalid',
-          },
+          message: 'password is invalid',
         });
       }
 

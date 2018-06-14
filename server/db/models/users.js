@@ -85,8 +85,5 @@ module.exports.validatePassword = (password, user) => {
 module.exports.getById = (id) => {
   const query = { _id: id };
 
-  return Users.findOne(query)
-    .then(existingUser => {
-      return Promise.resolve(_.omit(existingUser.toObject(), ['authentication']));
-    });
+  return Users.findOne(query);
 };
