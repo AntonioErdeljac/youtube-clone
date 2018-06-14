@@ -16,7 +16,5 @@ module.exports = (req, res) => {
         token: db.Users.generateJWT(response),
       },
     }).end())
-    .catch((error) => res.json({
-      errors: uniqueFieldError(error),
-    }));
+    .catch((error) => res.json(uniqueFieldError(error)));
 };

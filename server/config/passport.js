@@ -5,8 +5,8 @@ const LocalStrategy = require('passport-local');
 const db = require('../db');
 
 passport.use(new LocalStrategy({
-  usernameField: 'contact[email]',
-  passwordField: 'authentication[password]',
+  usernameField: 'email',
+  passwordField: 'password',
 }, (email, password, done) => {
   db.Users.getByEmail(email)
     .then((user) => {

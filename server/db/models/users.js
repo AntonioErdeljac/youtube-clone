@@ -56,8 +56,17 @@ module.exports.generateJWT = (user) => {
 module.exports.create = (values) => {
   const user = _.omit(values, ['_id']);
 
-  _.merge(user, { authentication: { salt: crypto.randomBytes(16).toString('hex') } });
-  _.merge(user, { authentication: { hash: crypto.pbkdf2Sync(user.authentication.password, user.authentication.salt, 10000, 512, 'sha512').toString('hex') } });
+  _.merge(user, {
+    authentication: {
+      salt: crypto.randomBytes(16).toString('hex')
+    }
+  });
+
+  _.merge(user, {
+    authentication: {
+      hash: crypto.pbkdf2Sync(user.authentication.password, user.authentication.salt, 10000, 512, 'sha512').toString('hex')
+    }
+  });
 
   return Users(user).save()
     .then(newUser => {
@@ -71,4 +80,13 @@ module.exports.validatePassword = (password, user) => {
   const hash = crypto.pbkdf2Sync(password, user.authentication.salt, 10000, 512, 'sha512').toString('hex');
 
   return hash === user.authentication.hash;
+};
+
+module.exports.getById = (id) => {
+  const query = { _id: id };
+
+  return Users.findOne(query)
+    .then(existingUser => {
+      return Promise.resolve(_.omit(existingUser.toObject(), ['authentication']));
+    });
 };

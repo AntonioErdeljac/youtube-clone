@@ -3,6 +3,22 @@ const _ = require('lodash');
 const db = require('../../db');
 
 module.exports = (req, res) => {
+  if(!req.body.email) {
+    return res.status(400).json({
+      errors: {
+        email: 'is required',
+      },
+    });
+  }
+
+  if(!req.body.password) {
+    return res.status(400).json({
+      errors: {
+        email: 'is required',
+      },
+    });
+  }
+
   return passport.authenticate('local', { session: false }, (err, passportUser, info) => {
     if(err) {
       return res.status(400).json(err);
