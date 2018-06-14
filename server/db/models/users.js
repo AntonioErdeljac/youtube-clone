@@ -2,6 +2,8 @@ const mongoose = require('mongoose');
 const _ = require('lodash');
 const uniqueValidator = require('mongoose-unique-validator');
 const crypto = require('crypto');
+const jwt = require('jsonwebtoken');
+const db = require('../../db');
 
 const { Schema } = mongoose;
 
@@ -32,21 +34,11 @@ const Users = mongoose.model('users', new Schema({
 
 module.exports.isValid = values => !Users(values).validateSync();
 
-module.exports.create = (values) => {
-  const user = _.omit(values, ['_id']);
+module.exports.getByEmail = (email) => {
+  const query = { 'contact.email': email };
 
-  user.salt = crypto.randomBytes(16).toString('hex');
-  user.hash = crypto.pbkdf2Sync(password, user.salt, 10000, 512, 'sha512').toString('hex');
-
-  return Users(user).save()
-    .then(newUser => Promise.resolve(_.omit(newUser.toObject(), ['authentication'])))
-};
-
-module.exports.validatePassword = (password, user) => {
-  const hash = crypto.pbkdf2Sync(password, user.salt, 10000, 512, 'sha512').toString('hex');
-
-  return hash === user.hash;
-};
+  return Users.findOne(query);
+}
 
 module.exports.generateJWT = (user) => {
   const today = new Date();
@@ -59,4 +51,24 @@ module.exports.generateJWT = (user) => {
     id: user._id,
     exp: parseInt(expirationDate / 1000, 10),
   }, 'youtube-clone');
+};
+
+module.exports.create = (values) => {
+  const user = _.omit(values, ['_id']);
+
+  _.merge(user, { authentication: { salt: crypto.randomBytes(16).toString('hex') } });
+  _.merge(user, { authentication: { hash: crypto.pbkdf2Sync(user.authentication.password, user.authentication.salt, 10000, 512, 'sha512').toString('hex') } });
+
+  return Users(user).save()
+    .then(newUser => {
+      const ommitedUser = _.omit(newUser.toObject(), ['authentication']);
+
+      return Promise.resolve(ommitedUser);
+    });
+};
+
+module.exports.validatePassword = (password, user) => {
+  const hash = crypto.pbkdf2Sync(password, user.authentication.salt, 10000, 512, 'sha512').toString('hex');
+
+  return hash === user.authentication.hash;
 };

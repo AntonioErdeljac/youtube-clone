@@ -14,10 +14,14 @@
     "crypto": "^1.0.1",
     "errorhandler": "^1.5.0",
     "express": "^4.16.3",
+    "express-jwt": "^5.3.1",
     "express-session": "^1.15.6",
+    "jsonwebtoken": "^8.3.0",
     "mongoose": "^5.1.5",
     "mongoose-unique-validator": "^2.0.1",
     "morgan": "^1.9.0",
+    "passport": "^0.4.0",
+    "passport-local": "^1.0.0",
     "path": "^0.12.7"
   }
 }

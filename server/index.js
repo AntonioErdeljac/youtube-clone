@@ -33,6 +33,8 @@ if(!isProduction) {
 
 app.use('/', routes());
 
+require('./config/passport');
+
 mongoose.connect('mongodb://localhost/youtube-clone');
 mongoose.set('debug', true);
 

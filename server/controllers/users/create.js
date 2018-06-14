@@ -10,7 +10,12 @@ module.exports = (req, res) => {
   }
 
   return db.Users.create(newUser)
-    .then(response => res.status(201).json(response).end())
+    .then(response => res.status(201).json({
+      user: {
+        ...response,
+        token: db.Users.generateJWT(response),
+      },
+    }).end())
     .catch((error) => res.json({
       errors: uniqueFieldError(error),
     }));
