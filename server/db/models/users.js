@@ -23,22 +23,13 @@ const Users = mongoose.model('users', new Schema({
     email: {
       type: String,
       required: true,
+      unique: true,
     },
   },
-}, { timestamps: true }));
+}, { timestamps: true })
+.plugin(uniqueValidator, { message: 'is already taken' }));
 
 module.exports.isValid = values => !Users(values).validateSync();
-
-module.exports.isUnique = values => {
-  Promise.resolve(Users.findOne({
-    'contact.email': values.contact.email,
-  }).then((existingUser) => {
-    if(!existingUser) {
-      return true;
-    }
-    return false;
-  }));
-};
 
 module.exports.create = (values) => {
   const user = _.omit(values, ['_id']);

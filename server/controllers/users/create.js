@@ -1,5 +1,7 @@
 const db = require('../../db');
 
+const { uniqueFieldError } = require('../../utils/errors');
+
 module.exports = (req, res) => {
   const newUser = req.body;
 
@@ -7,14 +9,9 @@ module.exports = (req, res) => {
     return res.sendStatus(400);
   }
 
-  if(!db.Users.isUnique(newUser)) {
-    return res.status(400).json({
-      errors: {
-        email: 'is already taken',
-      },
-    });
-  }
-
   return db.Users.create(newUser)
     .then(response => res.status(201).json(response).end())
+    .catch((error) => res.json({
+      errors: uniqueFieldError(error),
+    }));
 };
