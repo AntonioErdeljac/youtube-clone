@@ -3,13 +3,20 @@ const _ = require('lodash');
 const { Schema } = mongoose;
 
 const Videos = mongoose.model('videos', new Schema({
-  title: String,
+  title: {
+    type: String,
+    required: true,
+  },
   author: {
     ref: 'users',
     type: Schema.Types.ObjectId,
+    required: true,
   },
   description: String,
-  file: String,
+  file: {
+    type: String,
+    required: true,
+  },
   views: {
     type: Number,
     default: 0,
@@ -27,4 +34,10 @@ module.exports.create = (values) => {
 
   return Videos(video).save()
     .then(() => video);
+};
+
+module.exports.getById = (id) => {
+  const query = { _id: id };
+
+  return Videos.findOne(query);
 };
