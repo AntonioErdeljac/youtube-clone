@@ -32,8 +32,7 @@ module.exports.isValid = values => !Videos(values).validateSync();
 module.exports.create = (values) => {
   const video = _.omit(values, ['_id']);
 
-  return Videos(video).save()
-    .then(() => video);
+  return Videos(video).save();
 };
 
 module.exports.getById = (id) => {
