@@ -3,27 +3,30 @@ const _ = require('lodash');
 const { Schema } = mongoose;
 
 const Videos = mongoose.model('videos', new Schema({
-  title: {
-    type: String,
-    required: true,
+  general: {
+    title: {
+      type: String,
+      required: true,
+    },
+    author: {
+      ref: 'users',
+      type: Schema.Types.ObjectId,
+    },
+    description: String,
+    file: {
+      type: String,
+      required: true,
+    },
   },
-  author: {
-    ref: 'users',
-    type: Schema.Types.ObjectId,
-    required: true,
-  },
-  description: String,
-  file: {
-    type: String,
-    required: true,
-  },
-  views: {
-    type: Number,
-    default: 0,
-  },
-  upvotes: {
-    type: Number,
-    default: 0,
+  statistics: {
+    views: {
+      type: Number,
+      default: 0,
+    },
+    upvotes: {
+      type: Number,
+      default: 0,
+    }
   }
 }, { timestamps: true }));
 
