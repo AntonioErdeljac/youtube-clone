@@ -9,7 +9,7 @@ module.exports = (req, res) => {
   if(file) {
     const filePath = `${appDir}/public/videos/${file.name}`;
 
-    file.mv(filePath)
+    return file.mv(filePath)
       .then(() => {
         const updatedFile = {
           name: file.name,
