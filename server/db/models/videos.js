@@ -14,7 +14,8 @@ const Videos = mongoose.model('videos', new Schema({
     },
     description: String,
     file: {
-      type: String,
+      type: Schema.Types.ObjectId,
+      ref: 'files',
       required: true,
     },
   },

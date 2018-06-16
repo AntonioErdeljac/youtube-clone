@@ -5,6 +5,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const path = require('path');
 const session = require('express-session');
+const fileUpload = require('express-fileupload');
 
 const routes = require('./routes');
 
@@ -14,6 +15,7 @@ const isProduction = process.env.NODE_ENV === 'production';
 const app = express();
 
 app.use(cors());
+app.use(fileUpload());
 app.use(require('morgan')('dev'));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
