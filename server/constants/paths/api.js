@@ -6,4 +6,6 @@ module.exports.v1 = {
   AUTHENTICATION_LOGIN: '/api/v1/authentication/login',
   FILES: '/api/v1/files',
   FILES_ID: '/api/v1/files/:id',
+  COMMENTS: '/api/v1/videos/:id/comments',
+  COMMENT_ID: '/api/v1/videos/:videoId/comments/:commentId',
 };

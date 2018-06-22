@@ -1,11 +1,13 @@
-const users = require('./users');
 const authentication = require('./authentication');
-const videos = require('./videos');
+const comments = require('./comments');
 const files = require('./files');
+const users = require('./users');
+const videos = require('./videos');
 
 module.exports = (router) => {
-  users(router);
-  files(router);
   authentication(router);
+  comments(router);
+  files(router);
+  users(router);
   videos(router);
 };

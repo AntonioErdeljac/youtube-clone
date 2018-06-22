@@ -29,3 +29,9 @@ module.exports.getById = (id) => {
 
   return Comments.findOne(query);
 };
+
+module.exports.getByVideo = (video) => {
+  const query = { video };
+
+  return Comments.find(query);
+};
