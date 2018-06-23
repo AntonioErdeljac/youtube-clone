@@ -35,3 +35,9 @@ module.exports.getByVideo = (video) => {
 
   return Comments.find(query);
 };
+
+module.exports.deleteById = (id) => {
+  const query = { _id: id };
+
+  return Comments.remove(query);
+};
