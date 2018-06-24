@@ -87,3 +87,18 @@ module.exports.getById = (id) => {
 
   return Users.findOne(query);
 };
+
+module.exports.get = ( options = {} ) => {
+  const { keyword } = options;
+
+  const query = {};
+
+  if(keyword) {
+    query.$or = [
+      { 'personal.firstName': new RegExp(_.escapeRegExp(_.trim(keyword)), 'i') },
+      { 'personal.lastName': new RegExp(_.escapeRegExp(_.trim(keyword)), 'i') },
+    ];
+  }
+
+  return Users.find(query);
+};

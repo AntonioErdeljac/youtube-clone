@@ -4,6 +4,7 @@ const authentication = require('../authentication');
 
 module.exports = (router) => {
   router.post(paths.api.v1.USERS, authentication.optional, users.create);
+  router.get(paths.api.v1.USERS, authentication.optional, users.get);
 
   router.get(paths.api.v1.USERS_ID, authentication.optional, users.getById);
   router.patch(paths.api.v1.USERS_ID, authentication.required, users.updateById);
