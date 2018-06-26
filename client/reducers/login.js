@@ -6,5 +6,15 @@ export default (state={}, action) => {
       return {
         ...state,
       }
-  }
-}
+    case actions.LOGIN_FORM_CHANGE_VALUE:
+      return {
+        ...state,
+        values: {
+          ...state.values,
+          [action.key]: action.value,
+        }
+      };
+    default:
+      return state;
+  };
+};
