@@ -10,20 +10,20 @@ const Login = (props) => {
     <div className="container">
       <div className="row">
         <div className="col-md-6 col-12 offset-md-3">
-        <div className="card">
-        <div className="card-body">
-        <form>
-          <div className="form-group">
-            <Input changeValue={props.onChangeValue} type="email" id="user.email" name="Email"/>
+          <div className="card">
+            <div className="card-body">
+              <form>
+                <div className="form-group">
+                  <Input changeValue={props.onChangeValue} type="email" id="user.email" name="Email"/>
+                </div>
+                <div className="form-group">
+                  <Input changeValue={props.onChangeValue} type="password" id="user.authentication.password" name="Password" />
+                </div>
+                <button type="submit" className="btn btn-primary">Submit</button>
+              </form>
+            </div>
           </div>
-          <div className="form-group">
-            <Input changeValue={props.onChangeValue} type="password" id="user.authentication.password" name="Password" />
-          </div>
-          <button type="submit" className="btn btn-primary">Submit</button>
-        </form>
         </div>
-        </div>
-      </div>
       </div>
     </div>
   );
